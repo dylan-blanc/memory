@@ -7,14 +7,6 @@ use PDOException;
 
 class HomeModel
 {
-    /**
-     * Persists a newly uploaded image as a "card" row.
-     *
-     * @param string $name      Human friendly label (usually original filename)
-     * @param string $imagePath Relative path stored in cards.image_path
-     *
-     * @return array{success:bool,message:string,id?:int}
-     */
     public function saveCard(string $name, string $imagePath): array
     {
         $pdo = Database::getPdo();
@@ -33,11 +25,48 @@ class HomeModel
                 'id' => (int)$pdo->lastInsertId(),
             ];
         } catch (PDOException $e) {
-            // Masquer les détails SQL tout en exposant un message utile
             return [
                 'success' => false,
                 'message' => 'Impossible d\'enregistrer l\'image en base.',
             ];
         }
     }
+
+    public function showuserscore(): array
+    {
+        $pdo = Database::getPdo();
+
+        $sql = "SELECT username, score FROM users ORDER BY score DESC LIMIT 23";
+
+        try {
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
 }
+
+
+// class showcards
+// {
+//     public function fetchTopCards(int $limit = 10): array
+//     {
+//         $pdo = Database::getPdo();
+
+//         $sql = "SELECT id, name, image_path FROM cards ORDER BY id DESC LIMIT :limit";
+
+//         try {
+//             $stmt = $pdo->prepare($sql);
+//             $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+//             $stmt->execute();
+
+//             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+//         } catch (PDOException $e) {
+//             return [];
+//         }
+//     }
+// }
+
