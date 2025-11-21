@@ -37,7 +37,7 @@ nav {
   z-index: 15;
   color: #fff;
   opacity: 0.5;
-  height : 1px;
+  height: 1px;
 }
 nav a {
   margin-right: 10px;
@@ -48,7 +48,6 @@ nav a {
 main {
   padding: 20px;
   color: #fff;
-
 }
 
 h1 {
