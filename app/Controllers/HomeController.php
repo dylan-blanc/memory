@@ -2,6 +2,9 @@
 
 namespace App\Controllers;
 
+require_once __DIR__ . '/../includes/helper.php';
+
+use App\Models\HomeModel;
 use Core\BaseController;
 
 /**
@@ -25,14 +28,46 @@ class HomeController extends BaseController
         // - Injecte le tableau de paramètres (ici, une variable $title utilisable dans la vue)
         // - Insère le contenu de la vue dans le layout global "base.php"
         $this->render('home/index', [
-            'title' => 'Bienvenue sur le mini-MVC'
+            'title' => ''
         ]);
     }
 
-    public function about(): void
+    public function upload(): void
     {
-        $this->render('home/about', [
-            'title' => 'À propos de nous'
+        $this->uploadimage();
+        $this->render('home/upload', [
+            'title' => ''
         ]);
+    }
+
+    public function uploadimage()
+
+    {
+        if (is_post()) {
+            $uploadDir = __DIR__ . '/../../public/assets/images/';
+            $uploader = new \App\Includes\ImageUploader($uploadDir);
+            $result = $uploader->upload($_FILES['image'] ?? null);
+            if (!$result['success']) {
+                set_flash_message($result['message'], 'error');
+                return;
+            }
+
+            $fileName = $result['file_name'] ?? ($_FILES['image']['name'] ?? '');
+            $relativePath = 'assets/images/' . ($result['file_name'] ?? $fileName);
+            $cleanName = clean_input(pathinfo($fileName, PATHINFO_FILENAME));
+            if ($cleanName === '') {
+                $cleanName = $fileName ?: 'Carte';
+            }
+
+            $model = new HomeModel();
+            $dbResult = $model->saveCard($cleanName, $relativePath);
+
+            $flashType = $dbResult['success'] ? 'success' : 'error';
+            $flashMessage = $dbResult['success']
+                ? 'Image uploadée et enregistrée en base.'
+                : $dbResult['message'];
+
+            set_flash_message($flashMessage, $flashType);
+        }
     }
 }

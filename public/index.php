@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require __DIR__ . '/../vendor/autoload.php'; // Chargement de l'autoloader généré par Composer
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/../");
@@ -15,10 +17,10 @@ $router = new Router();
 // La route "/" pointe vers la méthode "index" du contrôleur HomeController
 $router->get('/', 'App\\Controllers\\HomeController@index');
 
-$router->get('/about', 'App\\Controllers\\HomeController@about');
-
+$router->get('/upload', 'App\\Controllers\\HomeController@upload');
+$router->post('/upload', 'App\\Controllers\\HomeController@upload');
 // La route "/articles" pointe vers la méthode "index" du contrôleur ArticleController
-$router->get('/articles', 'App\\Controllers\\ArticleController@index');
+// $router->get(path: '/articles', 'App\\Controllers\\ArticleController@index');
 
 // Exécution du routeur :
 // On analyse l'URI et la méthode HTTP pour appeler le contrôleur et la méthode correspondants

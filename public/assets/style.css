@@ -1,17 +1,96 @@
+/*
+* ************************************** Fond d'ecran et Global **************************************
+*/
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background: url("../assets/images/G9lFPCK.gif") no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  z-index: 10;
 }
+
+@media (max-width: 600px) {
+  body {
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1919px) {
+  body {
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+@media (min-width: 1920px) and (max-width: 2559px) {
+  body {
+    background-size: 100% 100%;
+    background-position: center center;
+  }
+}
+
+@media (min-width: 2560px) and (max-width: 3839px) {
+  body {
+    background-size: 100% 100%;
+    background-position: center center;
+  }
+}
+
+@media (min-width: 3840px) {
+  body {
+    background-size: 100% 100%;
+    background-position: center center;
+  }
+}
+
 nav {
-  background: #f4f4f4;
-  padding: 10px;
+  z-index: 15;
+  color: #fff;
+  opacity: 0.5;
+  height : 1px;
 }
 nav a {
   margin-right: 10px;
   text-decoration: none;
-  color: #333;
+  color: #fff;
+  opacity: 0.5;
 }
 main {
   padding: 20px;
+  color: #fff;
+
 }
+
+h1 {
+  font-size: 48px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: gold;
+  text-shadow: 2px 2px 4px #000;
+  opacity: 0.5;
+}
+
+h2 {
+  font-size: 36px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: gold;
+  text-shadow: 2px 2px 4px #000;
+  opacity: 0.5;
+}
+
+form {
+  margin: 20px 0;
+  opacity: 0.5;
+}
+
+/*
+* ************************************** Contenu principal **************************************
+*/
+

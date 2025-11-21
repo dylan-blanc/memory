@@ -6,6 +6,8 @@
  * Ce fichier définit la structure HTML commune à toutes les pages.
  * Il inclut dynamiquement le contenu spécifique à chaque vue via la variable $content.
  */
+
+require_once __DIR__ . '/../../includes/helper.php';
 ?>
 <!doctype html>
 <html lang="fr">
@@ -26,15 +28,23 @@
 <body>
   <!-- Menu de navigation global -->
   <nav>
-    <a href="/">Accueil</a> |
-    <a href="/articles">Articles</a> |
-    <a href="/about">À propos</a>
-
+    <p> <a href="/">Accueil</a>
+      <a href="/upload">Upload</a>
+    </p>
   </nav>
+
 
   <!-- Contenu principal injecté depuis BaseController -->
   <main>
     <?= $content ?>
+    <?php $successFlash = get_flash('success'); ?>
+    <?php $errorFlash = get_flash('error'); ?>
+    <?php if ($successFlash): ?>
+      <div class="flash flash-success"><?= e($successFlash) ?></div>
+    <?php endif; ?>
+    <?php if ($errorFlash): ?>
+      <div class="flash flash-error"><?= e($errorFlash) ?></div>
+    <?php endif; ?>
   </main>
 </body>
 
