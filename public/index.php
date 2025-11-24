@@ -19,6 +19,8 @@ $router->get('/', 'App\\Controllers\\HomeController@index');
 
 $router->get('/upload', 'App\\Controllers\\HomeController@upload');
 $router->post('/upload', 'App\\Controllers\\HomeController@upload');
+$router->post('/set-difficulty', 'App\\Controllers\\HomeController@setDifficulty');
+$router->post('/', 'App\\Controllers\\HomeController@resetSession');
 // La route "/articles" pointe vers la méthode "index" du contrôleur ArticleController
 // $router->get(path: '/articles', 'App\\Controllers\\ArticleController@index');
 

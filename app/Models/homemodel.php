@@ -47,6 +47,27 @@ class HomeModel
             return [];
         }
     }
+
+    /**
+     * Récupère aléatoirement un nombre donné de cartes.
+     * Utilisé pour construire les paires selon la difficulté choisie.
+     */
+    public function fetchRandomCards(int $limit): array
+    {
+        $pdo = Database::getPdo();
+
+        $sql = "SELECT id, name, image_path FROM cards ORDER BY RAND() LIMIT :limit";
+
+        try {
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
 }
 
 

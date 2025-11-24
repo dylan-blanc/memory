@@ -79,15 +79,17 @@ form {
 * ************************************** Contenu principal **************************************
 */
 
+/*
+* ************************************** LEADERBOARD **************************************
+*/
+
 .leaderboard {
   max-width: 900px;
   margin: 40px auto;
-  padding: 40px 30px 32px;
-  border-radius: 28px;
-  background: rgba(40, 40, 40, 0.92);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65);
   text-align: center;
   color: #39ff14;
+  margin-top: -2%;
 }
 
 .leaderboard-title {
@@ -138,6 +140,8 @@ form {
   border-spacing: 0;
   margin: 0 auto;
   color: inherit;
+  width: 100%;
+  table-layout: fixed;
 }
 
 .leaderboard th,
@@ -148,6 +152,8 @@ form {
   font-family: "Courier New", monospace;
   text-transform: uppercase;
   letter-spacing: 1px;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .score-table-Top3 {
@@ -167,7 +173,6 @@ form {
   min-width: 260px;
   border-radius: 18px;
   background: rgba(0, 0, 0, 0.25);
-  padding: 10px 8px;
   box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.35);
 }
 
@@ -198,4 +203,210 @@ form {
   .score-table-Top20 {
     width: 100%;
   }
+}
+
+/*
+* ************************************** FORM DIFFICULTE **************************************
+*/
+
+.difficulty-form {
+  width: 250px;
+  margin: 20px auto;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.35);
+  color: #39ff14;
+}
+
+.difficulty-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.difficulty-label {
+  font-weight: bold;
+  text-align: center;
+}
+
+.difficulty-select {
+  margin-left: 29%;
+  font-size: 1.3rem;
+  border: none;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  background-color: #39ff14;
+  font-weight: bold;
+}
+
+.difficulty-select option {
+  font-weight: bold;
+}
+
+.difficulty-button {
+  display: block;
+  width: 50%;
+  margin-left: 25%;
+  padding: 10px;
+  margin-top: 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #000;
+  background-color: gold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/*
+* ************************************** TEST **************************************
+*/
+
+/*
+* ************************************** GRILLE MEMOIRE **************************************
+*/
+
+.memory-section {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.35);
+  color: #fff;
+}
+
+.memory-title {
+  font-size: 2rem;
+  color: gold;
+  margin-bottom: 10px;
+}
+
+.memory-title small {
+  display: block;
+  font-size: 1rem;
+  color: #39ff14;
+}
+
+.memory-hint,
+.memory-placeholder {
+  font-size: 1rem;
+  color: #e5e5e5;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.memory-board {
+  display: grid;
+  gap: 14px;
+  justify-content: center;
+}
+
+.memory-board--facile {
+  grid-template-columns: repeat(3, minmax(150px, 1fr));
+}
+
+.memory-board--moyen {
+  grid-template-columns: repeat(6, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.memory-board--difficile {
+  grid-template-columns: repeat(12, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.memory-board--difficile .memory-card {
+  width: 100px;
+  height: 200px;
+}
+
+@media (max-width: 900px) {
+  .memory-board--difficile {
+    grid-template-columns: repeat(3, minmax(140px, 1fr));
+  }
+}
+
+.memory-card {
+  width: 150px;
+  height: 250px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  background: #000;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+  position: relative;
+}
+
+.memory-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.65);
+}
+
+.memory-card-toggle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+
+.memory-card-toggle:focus-visible + .memory-card-inner {
+  outline: 3px solid #39ff14;
+  outline-offset: 4px;
+}
+
+.memory-card-inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.memory-card-toggle:checked + .memory-card-inner {
+  transform: rotateY(180deg);
+}
+
+.memory-card-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.memory-card-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.memory-card-face--front {
+  transform: rotateY(180deg);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
