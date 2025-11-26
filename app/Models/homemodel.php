@@ -68,26 +68,29 @@ class HomeModel
             return [];
         }
     }
+
+    public function saveUserScore(string $username, int $score): array
+    {
+        $pdo = Database::getPdo();
+
+        $sql = "INSERT INTO users (username, score) VALUES (:username, :score)
+                ON DUPLICATE KEY UPDATE score = GREATEST(score, VALUES(score))";
+
+        try {
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindValue(':username', $username);
+            $stmt->bindValue(':score', $score, \PDO::PARAM_INT);
+            $stmt->execute();
+
+            return [
+                'success' => true,
+                'message' => 'Score enregistré.',
+            ];
+        } catch (PDOException $e) {
+            return [
+                'success' => false,
+                'message' => 'Impossible d\'enregistrer le score.',
+            ];
+        }
+    }
 }
-
-
-// class showcards
-// {
-//     public function fetchTopCards(int $limit = 10): array
-//     {
-//         $pdo = Database::getPdo();
-
-//         $sql = "SELECT id, name, image_path FROM cards ORDER BY id DESC LIMIT :limit";
-
-//         try {
-//             $stmt = $pdo->prepare($sql);
-//             $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
-//             $stmt->execute();
-
-//             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-//         } catch (PDOException $e) {
-//             return [];
-//         }
-//     }
-// }
-

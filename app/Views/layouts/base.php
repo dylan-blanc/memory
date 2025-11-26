@@ -30,6 +30,8 @@ require_once __DIR__ . '/../../includes/helper.php';
   <nav>
     <p> <a href="/">Accueil</a>
       <a href="/upload">Upload</a>
+      <a href="https://github.com/dylan-blanc/memory" target="_blank" style="color: yellow; opacity: 100%; text-decoration: underline;">Memory Game - Dylan BLANC</a>
+
     </p>
   </nav>
 
@@ -40,12 +42,26 @@ require_once __DIR__ . '/../../includes/helper.php';
     <?php $successFlash = get_flash('success'); ?>
     <?php $errorFlash = get_flash('error'); ?>
     <?php if ($successFlash): ?>
-      <div class="flash flash-success"><?= e($successFlash) ?></div>
+      <div class="flash flash-success" role="status"><?= e($successFlash) ?></div>
     <?php endif; ?>
     <?php if ($errorFlash): ?>
-      <div class="flash flash-error"><?= e($errorFlash) ?></div>
+      <div class="flash flash-error" role="alert"><?= e($errorFlash) ?></div>
     <?php endif; ?>
   </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var flashes = document.querySelectorAll('.flash');
+      flashes.forEach(function(flash) {
+        var hideFlash = function() {
+          flash.classList.add('flash--hidden');
+        };
+
+        flash.addEventListener('click', hideFlash);
+        window.setTimeout(hideFlash, 700);
+      });
+    });
+  </script>
 
 </body>
 

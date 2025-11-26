@@ -21,8 +21,9 @@ $router->get('/upload', 'App\\Controllers\\HomeController@upload');
 $router->post('/upload', 'App\\Controllers\\HomeController@upload');
 $router->post('/set-difficulty', 'App\\Controllers\\HomeController@setDifficulty');
 $router->post('/', 'App\\Controllers\\HomeController@resetSession');
-// La route "/articles" pointe vers la méthode "index" du contrôleur ArticleController
-// $router->get(path: '/articles', 'App\\Controllers\\ArticleController@index');
+$router->post('/score', 'App\\Controllers\\HomeController@incrementScore');
+$router->post('/game-complete', 'App\\Controllers\\HomeController@completeGame');
+$router->post('/submit-score', 'App\\Controllers\\HomeController@submitScore');
 
 // Exécution du routeur :
 // On analyse l'URI et la méthode HTTP pour appeler le contrôleur et la méthode correspondants

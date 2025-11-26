@@ -302,18 +302,30 @@ form {
   justify-content: center;
 }
 
+/* Centrage amélioré pour la grille facile */
 .memory-board--facile {
-  grid-template-columns: repeat(3, minmax(150px, 1fr));
+  grid-template-columns: repeat(3, 150px);
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: max-content;
+  min-width: 0;
 }
 
+/* Centrage amélioré pour la grille moyen */
 .memory-board--moyen {
-  grid-template-columns: repeat(6, minmax(150px, 1fr));
+  grid-template-columns: repeat(6, 150px);
   gap: 10px;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: max-content;
+  min-width: 0;
 }
 
 .memory-board--difficile {
   grid-template-columns: repeat(12, minmax(100px, 1fr));
-  gap: 10px;
+  gap: 4px;
 }
 
 .memory-board--difficile .memory-card {
@@ -409,4 +421,37 @@ form {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+.flash {
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 260px;
+  max-width: 90vw;
+  padding: 16px 24px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  cursor: pointer;
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+}
+
+.flash-success {
+  border: 2px solid #39ff14;
+}
+
+.flash-error {
+  border: 2px solid #ff4747;
+}
+
+.flash--hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -50%) scale(0.95);
 }

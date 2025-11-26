@@ -12,14 +12,12 @@
   <?= htmlspecialchars($title ?? 'Accueil', ENT_QUOTES, 'UTF-8') ?>
 </h1>
 
-<?php if (!empty($selectedDifficulty)):
-
-elseif (!empty($userscore) && is_array($userscore)): ?>
+<?php if (empty($selectedDifficulty) && !empty($userscore) && is_array($userscore)): ?>
   <section class="leaderboard">
     <h2 class="leaderboard-title">Leaderboard</h2>
     <?php
     $firstThree = array_slice($userscore, 0, 3);
-    $lastTwenty = array_slice($userscore, -20);
+    $lastTwenty = array_slice($userscore, 3, 20);
 
     if (count($firstThree) > 0): ?>
       <div class="leaderboard-top3">
@@ -69,12 +67,32 @@ elseif (!empty($userscore) && is_array($userscore)): ?>
   </section>
 <?php endif; ?>
 
+<?php if (empty($selectedDifficulty) && !empty($lastGame)): ?>
+  <?php
+  $timeSpent = (int)($lastGame['time_spent'] ?? 0);
+  $minutes = str_pad((string)floor($timeSpent / 60), 2, '0', STR_PAD_LEFT);
+  $seconds = str_pad((string)($timeSpent % 60), 2, '0', STR_PAD_LEFT);
+  $formattedTime = $minutes . ':' . $seconds;
+  ?>
+  <section class="last-game" style="color: gold; display: flex; align-items: center; align-self: center; flex-direction: column;">
+    <h3>Votre partie est terminée </h3>
+    <p>Score : <strong><?= (int)$lastGame['score'] ?></strong></p>
+    <p>Temps : <strong><?= $formattedTime ?></strong></p>
+    <p>Difficulté : <strong><?= e($lastGame['difficulty'] ?? '') ?></strong></p>
+    <form method="post" action="/submit-score" class="username-form">
+      <label for="username">Choisissez un pseudo pour le sauvegarder</label>
+      <?= "<br>" ?>
+      <input type="text" name="username" id="username" maxlength="12" required style="width: 100px; margin-left: 50px; margin-top: 10px;">
+      <button type="submit" style="background">Enregistrer</button>
+    </form>
+  </section>
+<?php endif; ?>
 
 
-<!-- Menu déroulant de sélection de difficulté -->
+
 <?php if (empty($selectedDifficulty)): ?>
   <form method="post" action="/set-difficulty" class="difficulty-form">
-    <label for="difficulty" class="difficulty-label">Sélectionnez la difficulté</label>
+    <label for="difficulty" class="difficulty-label">Commencer une partie</label>
     <select name="difficulty" id="difficulty" class="difficulty-select">
       <option value="facile"> Facile </option>
       <option value="moyen"> Moyen </option>
@@ -98,23 +116,39 @@ $backImage = '/assets/images/DosDeCarte1.png';
 ?>
 
 <section class="memory-section">
+  <?php if (!empty($selectedDifficulty)): ?>
+
+    <article>
+      <span style="position: absolute; top: 10px; right: 100px; font-size: 18px; font-weight: bold; color: gold;">
+        Score :
+        <span id="current-score"><?= (int)($score ?? 0) ?></span>
+        Temps :
+        <span id="timer" data-duration="60">01:00</span>
+
+      </span>
+    </article>
+  <?php endif; ?>
   <?php if (!empty($cardDeck)): ?>
-    <?php $meta = ($currentDifficulty && isset($difficultyMeta[$currentDifficulty])) ? $difficultyMeta[$currentDifficulty] : null; ?>
+    <?php
+    $meta = ($currentDifficulty && isset($difficultyMeta[$currentDifficulty])) ? $difficultyMeta[$currentDifficulty] : null;
+    $totalPairs = (int)floor(count($cardDeck) / 2);
+    ?>
     <h2 class="memory-title" style="margin-top: -100px;">
       Grille <?= $meta ? e($meta['label']) : 'Personnalisée' ?>
       <?php if ($meta): ?>
         <small>(<?= (int)$meta['pairs'] ?> paires / <?= (int)$meta['cards'] ?> cartes)</small>
       <?php endif; ?>
     </h2>
-    <div class="memory-board <?= $currentDifficulty ? 'memory-board--' . e($currentDifficulty) : '' ?>">
+    <div class="memory-board <?= $currentDifficulty ? 'memory-board--' . e($currentDifficulty) : '' ?>"
+      data-total-pairs="<?= max(1, $totalPairs) ?>"
+      data-difficulty="<?= e($currentDifficulty ?? 'facile') ?>">
       <?php foreach ($cardDeck as $index => $card): ?>
         <?php $cardId = (int)$card['id']; ?>
         <label class="memory-card"
           data-card-id="<?= $cardId ?>"
           data-position="<?= $index ?>">
           <input type="checkbox"
-            class="memory-card-toggle"
-            aria-label="Retourner la carte <?= e($card['name']) ?>">
+            class="memory-card-toggle">
           <span class="memory-card-inner">
             <span class="memory-card-face memory-card-face--back">
               <img src="<?= $backImage ?>" alt="Dos de la carte" width="150" height="250">
@@ -131,10 +165,10 @@ $backImage = '/assets/images/DosDeCarte1.png';
   <?php endif; ?>
 
   <?php if (!empty($selectedDifficulty)): ?>
-  <form method="post" action="/" class="reset-form" style="display: flex; justify-content: center; margin-top: 20px; ">
-    <input type="hidden" name="reset_session" value="1">
-    <button type="submit" class="reset-button">Reset Session</button>
-  </form>
+    <form method="post" action="/" class="reset-form" style="display: flex; justify-content: center; margin-top: 20px; ">
+      <input type="hidden" name="reset_session" value="1">
+      <button type="submit" class="reset-button">Reset Session</button>
+    </form>
   <?php endif; ?>
 
 
