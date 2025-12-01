@@ -28,7 +28,7 @@ class HomeController extends BaseController
         $selectedDifficulty = $_SESSION['selected_difficulty'] ?? null;
         $cardDeck = $_SESSION['card_grid'] ?? [];
         if (!empty($cardDeck)) {
-            shuffle($cardDeck); // Mélange le deck à chaque refresh
+            shuffle($cardDeck); // Melange le board a chaque refresh
         }
         $this->render('home/index', [
             'title' => '',
@@ -158,7 +158,7 @@ class HomeController extends BaseController
             return;
         }
 
-        // Définir les multiplicateurs selon la difficulté
+        // multiplicateurs
         $difficultyMeta = [
             'facile' => 10,
             'moyen' => 15,

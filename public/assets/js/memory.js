@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
             firstCard.checked = false;
             secondCard.checked = false;
             resetBoard();
-          }, 350);
+          }, 500);
         } else {
           incrementScore();
           matchedPairs = Math.min(totalPairs, matchedPairs + 1);

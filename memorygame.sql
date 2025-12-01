@@ -14,6 +14,20 @@ create table if not exists cards (
     image_path VARCHAR(255) NOT NULL
 );
 
+INSERT INTO cards (name, image_path) VALUES
+('TestCarte1', 'assets/images/TestCarte1.png'),
+('TestCarte2', 'assets/images/TestCarte2.png'),
+('TestCarte3', 'assets/images/TestCarte3.png'),
+('TestCarte4', 'assets/images/TestCarte4.png'),
+('TestCarte5', 'assets/images/TestCarte5.png'),
+('TestCarte6', 'assets/images/TestCarte6.png'),
+('TestCarte7', 'assets/images/TestCarte7.png'),
+('TestCarte8', 'assets/images/TestCarte8.png'),
+('TestCarte9', 'assets/images/TestCarte9.png'),
+('TestCarte10', 'assets/images/TestCarte10.png'),
+('TestCarte11', 'assets/images/TestCarte11.png'),
+('TestCarte12', 'assets/images/TestCarte12.png');
+
 INSERT INTO users (username, score) VALUES
 ('player1', 999999),
 ('player2', 888888),
